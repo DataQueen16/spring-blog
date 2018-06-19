@@ -30,7 +30,7 @@ public class DiceController {
 
     private static int getRandomDice() {
         Random r = new Random();
-        return r.nextInt((7 - 1) + 1) + 1;
+        return r.nextInt((6 - 1) + 1) + 1;
     }
 
 }
