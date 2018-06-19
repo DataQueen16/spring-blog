@@ -1,5 +1,7 @@
-package com.codeup.blog;
+package com.codeup.blog.controllers;
 
+import com.codeup.blog.PostService;
+import com.codeup.blog.models.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,10 +12,15 @@ import java.util.List;
 @Controller
 public class PostController {
 
+    private PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
+
     @GetMapping("/posts/{id}")
     public String postID(@PathVariable long id, Model model) {
-        id = 1;
-       Post post = new Post("Women in Tech", "We are here. We won't go away. We will only get stronger my friend.");
+       Post post = new Post(id,"Women in Tech", "We are here. We won't go away. We will only get stronger my friend.");
        model.addAttribute("post", post);
         return "posts/show";
     }
@@ -21,10 +28,6 @@ public class PostController {
     @RequestMapping(path="/posts", method= RequestMethod.GET)
     public String generatePosts(Model model) {
         List<Post> posts = new ArrayList<>();
-        Post blog = new Post("How to kiss a girl", "Be sweet and attentive. Get in real close. Kiss her lips like they are delicious strawberries that you cannot get enough of.");
-        Post queer = new Post("Love is ours too", "Creating a fair, equal, and fun society.");
-        posts.add(blog);
-        posts.add(queer);
         model.addAttribute("posts", posts);
         return "posts/index";
     }
