@@ -19,16 +19,16 @@ public class PostController {
     }
 
     @GetMapping("/posts/{id}")
-    public String postID(@PathVariable long id, Model model) {
-       Post post = new Post(id,"Women in Tech", "We are here. We won't go away. We will only get stronger my friend.");
-       model.addAttribute("post", post);
+    public String postID(@PathVariable long id, Model view) {
+       Post post = postService.findOne(id);
+       view.addAttribute("post", post);
         return "posts/show";
     }
 
     @RequestMapping(path="/posts", method= RequestMethod.GET)
-    public String generatePosts(Model model) {
-        List<Post> posts = new ArrayList<>();
-        model.addAttribute("posts", posts);
+    public String generatePosts(Model view) {
+        List<Post> posts = postService.findAll();
+        view.addAttribute("posts", posts);
         return "posts/index";
     }
 
