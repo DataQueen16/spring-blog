@@ -2,11 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="partials :: head">
     <meta charset="UTF-8" />
-    <title>Home</title>
+    <title>New Post</title>
 </head>
 <body>
 <nav th:replace="partials :: navbar"></nav>
-<h1>All the Posts</h1>
+<h1>Create a Post</h1>
+
+<form>
+
+</form>
 <div th:each="post : ${posts}">
     <h3><span th:text="${post.title}"></span></h3>
     <p th:text="${post.body}"></p>
