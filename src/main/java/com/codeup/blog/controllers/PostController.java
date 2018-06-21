@@ -25,6 +25,16 @@ public class PostController {
         return "posts/show";
     }
 
+    @GetMapping("/posts/{id}/edit")
+    public String edit(@PathVariable long id, Model view) {
+        Post existingPost = postService.findOne(id);
+
+        view.addAttribute("post", existingPost);
+
+        return "posts/edit";
+    }
+
+
     @RequestMapping(path="/posts", method= RequestMethod.GET)
     public String generatePosts(Model view) {
         List<Post> posts = postService.findAll();
@@ -32,9 +42,19 @@ public class PostController {
         return "posts/index";
     }
 
-    @RequestMapping(path="/posts/create", method = RequestMethod.POST)
-    @ResponseBody
-    public String posts() {
-        return "Create posts here";
+    @GetMapping("/posts/create")
+    public String create(Model view
+    ){
+        view.addAttribute("post", new Post());
+        return "/posts/create";
+    }
+
+
+    @PostMapping("/posts/create")
+    public String posts(
+            @ModelAttribute Post post
+    ) {
+        postService.save(post);
+        return "redirect:/posts";
     }
 }
