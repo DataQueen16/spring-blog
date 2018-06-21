@@ -1,6 +1,7 @@
 package com.codeup.blog.services;
 
 import com.codeup.blog.models.Post;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,6 +9,11 @@ import java.util.List;
 
 @Service
 public class PostService {
+    private PostRepository dao;
+
+    public PostService(PostRepository dao){
+        this.dao = dao;
+    }
 
     private List<Post> posts;
 
