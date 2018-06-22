@@ -1,5 +1,7 @@
 package com.codeup.blog.models;
 
+import com.codeup.blog.relationships.User;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,10 @@ public class Post {
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String body;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User owner;
 
 
     public Post(){}

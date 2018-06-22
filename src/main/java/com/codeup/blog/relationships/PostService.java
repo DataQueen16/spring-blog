@@ -1,6 +1,5 @@
-package com.codeup.blog.services;
+package com.codeup.blog.relationships;
 
-import com.codeup.blog.controllers.PostController;
 import com.codeup.blog.models.Post;
 import com.codeup.blog.repositories.PostRepository;
 import org.springframework.stereotype.Service;
