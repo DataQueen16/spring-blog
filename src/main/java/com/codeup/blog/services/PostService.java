@@ -1,28 +1,21 @@
 package com.codeup.blog.services;
 
+import com.codeup.blog.controllers.PostController;
 import com.codeup.blog.models.Post;
-import org.springframework.data.repository.CrudRepository;
+import com.codeup.blog.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PostService {
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
 
-    public PostService(PostRepository postRepository){
+    public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
-
-
-//    public PostService() {
-//        createPosts();
-//    }
-
-
-    public Iterable<Post> findAll() {
+    public List<Post> findAll() {
         return postRepository.findAll();
     }
 
@@ -32,7 +25,19 @@ public class PostService {
     }
 
     public Post findOne(long id) {
-        Post post = postRepository.findOne(id);
-        return post;
+        return postRepository.findOne(id);
     }
+
+    public List<Post> searchByTitle(String title) {
+        return postRepository.findByTitle(title);
+    }
+
+    public void delete(long id){
+    postRepository.delete(id);
+    }
+
+    public List<Post> search(String searchTerm){
+        return postRepository.findByTitleLike("%" + searchTerm + "%");
+    }
+
 }
