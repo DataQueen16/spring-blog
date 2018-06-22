@@ -36,7 +36,7 @@ public class PostController {
 
     @RequestMapping(path="/posts", method= RequestMethod.GET)
     public String generatePosts(Model view) {
-        List<Post> posts = postService.findAll();
+        Iterable<Post> posts = postService.findAll();
         view.addAttribute("posts", posts);
         return "posts/index";
     }
