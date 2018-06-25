@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head th:replace="partials :: head">
     <meta charset="UTF-8" />
     <title>Home</title>
@@ -8,6 +8,13 @@
 <body>
 <nav th:replace="partials :: navbar"></nav>
 <div class="container">
+
+    <div sec:authorize="isAuthenticated()">
+        User ID: <span th:text="${#authentication.principal.id}"/>
+        Username: <span th:text="${#authentication.principal.username}"/>
+        Email: <span th:text="${#authentication.principal.email}"/>
+    </div>
+
     <h1>All the Posts</h1>
     <div class="row">
         <form class="col-12">

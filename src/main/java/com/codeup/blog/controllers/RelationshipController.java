@@ -28,8 +28,8 @@ public class RelationshipController {
 
         User user = new User();
         user.setEmail("monkey@monkeylove.com");
-        user.setUsername("zgulde");
-        user.setPassword("codeup123");
+        user.setUsername("MonkeyLove");
+        user.setPassword("monkeeto");
         users.save(user);
 
         List<Post> posts = Arrays.asList(
