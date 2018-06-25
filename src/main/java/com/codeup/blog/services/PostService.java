@@ -26,7 +26,8 @@ public class PostService {
     }
 
     public Post save(Post post) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = users.findById(sessionUser.getId());
         post.setUser(user);
         postRepository.save(post);
         return post;

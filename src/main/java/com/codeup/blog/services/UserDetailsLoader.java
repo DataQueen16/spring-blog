@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailsLoader implements UserDetailsService {
-
     private final Users users;
 
     public UserDetailsLoader(Users users) {
@@ -18,11 +17,12 @@ public class UserDetailsLoader implements UserDetailsService {
     }
 
     @Override
-    public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = users.findByUsername(s);
-        if(user == null) {
-            throw new UsernameNotFoundException("Couldn't find user with username: " + s);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = users.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("No user found for " + username);
         }
+
         return new UserWithRoles(user);
     }
 }

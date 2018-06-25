@@ -2,12 +2,14 @@ package com.codeup.blog;
 
 import com.codeup.blog.services.UserDetailsLoader;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private UserDetailsLoader usersLoader;
@@ -39,17 +41,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll() // Anyone can go to the login page
                 /* Logout configuration */
                 .and()
-                .logout()
-                .logoutSuccessUrl("/login?logout") // append a query string value
-                /* Pages that can be viewed without having to log in */
+                    .logout()
+                    .logoutSuccessUrl("/login?logout") // append a query string value
+                    /* Pages that can be viewed without having to log in */
                 .and()
-                .authorizeRequests()
-                .antMatchers("/", "/posts") // anyone can see the home and the ads pages
-                .permitAll()
+                    .authorizeRequests()
+                    .antMatchers("/", "/posts") // anyone can see the home and the ads pages
+                    .permitAll()
                 /* Pages that require authentication */
                 .and()
-                .authorizeRequests()
-                .antMatchers(
+                    .authorizeRequests()
+                    .antMatchers(
                         "/posts/create", // only authenticated users can create ads
                         "/posts/{id}/edit" // only authenticated users can edit ads
                 )
