@@ -2,8 +2,7 @@ package com.codeup.blog.controllers;
 
 import com.codeup.blog.PostService;
 import com.codeup.blog.models.Post;
-import com.codeup.blog.models.User;
-import com.codeup.blog.repositories.UserRepository;
+import com.codeup.blog.repositories.Users;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import java.util.List;
 public class PostController {
 
     private PostService postService;
-    private UserRepository userRepository;
+    private Users users;
 
     public PostController(PostService postService) {
         this.postService = postService;
