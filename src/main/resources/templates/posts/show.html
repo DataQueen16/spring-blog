@@ -7,9 +7,10 @@
 </head>
 <body>
 <nav th:replace="partials :: navbar"></nav>
-<div>
+<div class="container">
     <div>
         <h3><span th:text="${post.title}"></span></h3>
+        <h2>Posted by: <span th:text="${post.user.email}" /></h2>
         <p th:text="${post.body}"></p>
     </div>
 </div>

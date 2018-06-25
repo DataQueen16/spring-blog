@@ -1,7 +1,9 @@
 package com.codeup.blog.controllers;
 
-import com.codeup.blog.relationships.PostService;
+import com.codeup.blog.PostService;
 import com.codeup.blog.models.Post;
+import com.codeup.blog.models.User;
+import com.codeup.blog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +14,26 @@ import java.util.List;
 public class PostController {
 
     private PostService postService;
+    private UserRepository userRepository;
 
     public PostController(PostService postService) {
-
         this.postService = postService;
+    }
+
+
+    @GetMapping("/posts")
+    public String generatePosts(Model view, @RequestParam(name = "search", required = false) String searchTerm) {
+
+        List<Post> posts;
+        if (searchTerm == null) {
+            posts = postService.findAll();
+        } else {
+            posts = postService.search(searchTerm);
+        }
+
+        view.addAttribute("posts", posts);
+        view.addAttribute("searchTerm", searchTerm);
+        return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
@@ -31,23 +49,16 @@ public class PostController {
         return "posts/edit";
     }
 
+    @PostMapping("/posts/{id}/edit")
+    public String updatePost(@PathVariable long id, @ModelAttribute Post post) {
+        postService.save(post);
+        return "redirect:/posts/" + id;
+    }
 
-    @GetMapping("/posts")
-    public String generatePosts(Model view, @RequestParam(name = "search", required = false) String searchTerm) {
-        // if there's a search term, show results for that search
-        // else, just show all the posts
-        List<Post> posts;
-        if (searchTerm == null) {
-            posts = postService.findAll();
-        } else {
-            posts = postService.search(searchTerm);
-        }
-
-        view.addAttribute("posts", posts);
-        view.addAttribute("searchTerm", searchTerm);
-
-        // relative path for the .html file inside of resources/templates w/o the .html
-        return "posts/index";
+    @PostMapping("/posts/{id}/delete")
+    public String delete(@PathVariable long id) {
+        postService.delete(id);
+        return "redirect:/posts";
     }
 
     @GetMapping("/posts/create")
@@ -58,30 +69,11 @@ public class PostController {
     }
 
     @PostMapping("/posts/create")
-    public String savePost(@ModelAttribute Post post) {
-        postService.save(post);
-
-        return "redirect:/posts";
-    }
-
-
-    @PostMapping("/posts/{id}/edit")
-    public String updatePost(@PathVariable long id, @ModelAttribute Post post) {
-        postService.save(post);
-        return "redirect:/posts/" + id;
-    }
-
-    @PostMapping("/posts/create")
-    public String posts(
+    public String savePosts(
             @ModelAttribute Post post
     ) {
         postService.save(post);
         return "redirect:/posts";
     }
 
-    @PostMapping("/posts/{id}/delete")
-    public String delete(@PathVariable long id) {
-        postService.delete(id);
-        return "redirect:/posts";
-    }
 }
