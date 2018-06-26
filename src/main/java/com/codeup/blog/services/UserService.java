@@ -17,11 +17,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void authenticateUser(Model view, long id) {
+    public boolean canEdit(Post post) {
         User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findById(sessionUser.getId());
-        Post post = postService.findOne(id);
-        if (post.getUser().getId() == user.getId()){
-            view.addAttribute("post", post);
+        post = postService.findOne(post.getId());
+        if (post.getUser().getId() == user.getId()) {
+            return true;
+        }
+        return false;
     }
 }

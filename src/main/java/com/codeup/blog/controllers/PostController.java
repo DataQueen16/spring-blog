@@ -4,6 +4,7 @@ import com.codeup.blog.models.User;
 import com.codeup.blog.repositories.UserRepository;
 import com.codeup.blog.services.PostService;
 import com.codeup.blog.models.Post;
+import com.codeup.blog.services.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +17,13 @@ public class PostController {
 
     private PostService postService;
     private UserRepository userRepository;
+    private UserService userService;
 
-    public PostController(PostService postService, UserRepository userRepository)
+    public PostController(PostService postService, UserRepository userRepository, UserService userService)
     {
         this.postService = postService;
+        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
 
@@ -60,6 +64,7 @@ public class PostController {
 
     @PostMapping("/posts/{id}/delete")
     public String delete(@PathVariable long id, Model view) {
+//        if(userService.canEdit() == true)
         postService.delete(id);
         return "redirect:/posts";
     }
