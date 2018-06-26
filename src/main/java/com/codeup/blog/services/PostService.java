@@ -3,7 +3,7 @@ package com.codeup.blog.services;
 import com.codeup.blog.models.Post;
 import com.codeup.blog.models.User;
 import com.codeup.blog.repositories.PostRepository;
-import com.codeup.blog.repositories.Users;
+import com.codeup.blog.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +12,12 @@ import java.util.List;
 @Service
 public class PostService {
     private final PostRepository postRepository;
-    private final Users users;
+    private final UserRepository userRepository;
 
 
-    public PostService(PostRepository postRepository, Users users) {
+    public PostService(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
-        this.users = users;
+        this.userRepository = userRepository;
     }
 
 
@@ -27,7 +27,7 @@ public class PostService {
 
     public Post save(Post post) {
         User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = users.findById(sessionUser.getId());
+        User user = userRepository.findById(sessionUser.getId());
         post.setUser(user);
         postRepository.save(post);
         return post;

@@ -1,8 +1,8 @@
 package com.codeup.blog.controllers;
 
+import com.codeup.blog.repositories.UserRepository;
 import com.codeup.blog.services.PostService;
 import com.codeup.blog.models.Post;
-import com.codeup.blog.repositories.Users;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,10 @@ import java.util.List;
 public class PostController {
 
     private PostService postService;
-    private Users users;
+    private UserRepository userRepository;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, UserRepository userRepository)
+    {
         this.postService = postService;
     }
 
@@ -67,11 +68,12 @@ public class PostController {
         return "/posts/create";
     }
 
-    @PostMapping("/posts/create")
+    @PostMapping("/posts/{id}")
     public String savePosts(
             @ModelAttribute Post post
     ) {
         postService.save(post);
+        System.out.println("This is the message");
         return "redirect:/posts";
     }
 

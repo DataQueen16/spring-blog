@@ -3,7 +3,7 @@ package com.codeup.blog.controllers;
 import com.codeup.blog.models.Post;
 import com.codeup.blog.models.User;
 import com.codeup.blog.repositories.PostRepository;
-import com.codeup.blog.repositories.Users;
+import com.codeup.blog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,11 +16,11 @@ import java.util.List;
 public class RelationshipController {
 
     private final PostRepository postRepository;
-    private final Users users;
+    private final UserRepository userRepository;
 
-    public RelationshipController(PostRepository postRepository, Users users){
+    public RelationshipController(PostRepository postRepository, UserRepository userRepository){
         this.postRepository = postRepository;
-        this.users = users;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/seed")
@@ -30,7 +30,7 @@ public class RelationshipController {
         user.setEmail("monkey@monkeylove.com");
         user.setUsername("MonkeyLove");
         user.setPassword("monkeeto");
-        users.save(user);
+        userRepository.save(user);
 
         List<Post> posts = Arrays.asList(
                 new Post("Monkeys are people too", "Only 2% difference in our genetic makeup"),
@@ -48,7 +48,7 @@ public class RelationshipController {
 
     @GetMapping("/example-profile")
     public String profile() {
-        User user = users.findOne(1l);
+        User user = userRepository.findOne(1l);
 
         System.out.println("Showing posts belonging to user " + user.getUsername());
 

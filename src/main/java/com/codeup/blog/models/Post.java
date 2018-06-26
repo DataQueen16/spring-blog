@@ -43,11 +43,11 @@ public class Post {
 
     public User getUser() { return user; }
 
-    public void setID(long id){
+    public void setId(long id){
         this.id = id;
     }
 
-    public Long getID(){
+    public Long getId(){
         return id;
     }
 

@@ -11,7 +11,7 @@
 <div class="container">
 
     <div sec:authorize="isAuthenticated()">
-        This content is only shown to authenticated users.
+        This content is only shown to authenticated userRepository.
 
         User ID: <span th:text="${#authentication.principal.id}"/>
         Username: <span th:text="${#authentication.principal.username}"/>
