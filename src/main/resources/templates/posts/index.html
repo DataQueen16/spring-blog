@@ -10,8 +10,7 @@
 <div class="container">
 
     <div sec:authorize="isAuthenticated()">
-        User ID: <span th:text="${#authentication.principal.id}"/>
-        Username: <span th:text="${#authentication.principal.username}"/>
+        Username: <span th:text="${#authentication.principal.username}"/><br />
         Email: <span th:text="${#authentication.principal.email}"/>
     </div>
 

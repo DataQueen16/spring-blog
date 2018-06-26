@@ -1,8 +1,10 @@
 package com.codeup.blog.controllers;
 
+import com.codeup.blog.models.User;
 import com.codeup.blog.repositories.UserRepository;
 import com.codeup.blog.services.PostService;
 import com.codeup.blog.models.Post;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +47,7 @@ public class PostController {
 
     @GetMapping("/posts/{id}/edit")
     public String edit(@PathVariable long id, Model view) {
+
         view.addAttribute("post", postService.findOne(id));
         return "posts/edit";
     }
@@ -56,19 +59,18 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/delete")
-    public String delete(@PathVariable long id) {
+    public String delete(@PathVariable long id, Model view) {
         postService.delete(id);
         return "redirect:/posts";
     }
 
     @GetMapping("/posts/create")
-    public String create(Model view
-    ){
+    public String create(Model view){
         view.addAttribute("post", new Post());
         return "/posts/create";
     }
 
-    @PostMapping("/posts/{id}")
+    @PostMapping("/posts/create")
     public String savePosts(
             @ModelAttribute Post post
     ) {
