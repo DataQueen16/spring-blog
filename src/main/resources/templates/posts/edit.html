@@ -11,16 +11,13 @@
 <div class="container">
 
     <div sec:authorize="isAuthenticated()">
-        This content is only shown to authenticated userRepository.
-
-        User ID: <span th:text="${#authentication.principal.id}"/>
-        Username: <span th:text="${#authentication.principal.username}"/>
+        Username: <span th:text="${#authentication.principal.username}"/><br />
         Email: <span th:text="${#authentication.principal.email}"/>
     </div>
 
     <form th:action="@{/posts/{id}/edit(id=${post.id})}" method="post" th:object="${post}">
 
-        <h1 class="my-4 text-center">Create a Post</h1>
+        <h1 class="my-4 text-center">Edit a Post</h1>
 
         <div class="form-group">
             <label for="title">Title</label>

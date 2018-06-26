@@ -58,14 +58,17 @@ public class PostController {
 
     @PostMapping("/posts/{id}/edit")
     public String updatePost(@PathVariable long id, @ModelAttribute Post post) {
+        if(userService.canEdit(post)){
         postService.save(post);
+        }
         return "redirect:/posts/" + id;
     }
 
     @PostMapping("/posts/{id}/delete")
-    public String delete(@PathVariable long id, Model view) {
-//        if(userService.canEdit() == true)
+    public String delete(@PathVariable long id, @ModelAttribute Post post) {
+        if(userService.canEdit(post)) {
         postService.delete(id);
+        }
         return "redirect:/posts";
     }
 
